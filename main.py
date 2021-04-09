@@ -3,10 +3,7 @@ import json
 from flask import Flask, request
 
 app = Flask(__name__)
-
-@app.route('/', methods=["GET"])
-def start_page():
-    return 'Стартовая страница'
+users = {}
 
 
 @app.route('/', methods=['POST'])
@@ -20,11 +17,14 @@ def main():
     }
     req = request.json
     if req['session']['new']:
-        response['response']['text'] = 'Привет!'
+        users = {req['session']['user_id']: 0}
+        response['response']['text'] = 'Привет!\nКупи слона!'
     else:
-        response['response']['text'] = 'Рада снова вас видеть здесь!'
+        if users[req['session']['user_id']] == 1:
+            response['response']['text'] = 'Stage 1'
 
     return json.dumps(response)
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
