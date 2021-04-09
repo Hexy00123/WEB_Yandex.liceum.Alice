@@ -21,10 +21,9 @@ def main():
         response['response']['text'] = 'Привет!\nКупи слона!'
     else:
         if users[req['session']['user_id']] == 0:
-            if len(set(req['session'].lower().split()).intersection(set('ладно',
-                                                                        'куплю',
-                                                                        'покупаю',
-                                                                        'хорошо'))) != 0:
+            agree_messages = ['ладно','куплю','покупаю','хорошо']
+
+            if len(set(req['session'].lower().split()).intersection(set(agree_messages))) != 0:
                 users[req['session']['user_id']] = 2
                 response['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
                 response['response']['end_sessiion'] = True
