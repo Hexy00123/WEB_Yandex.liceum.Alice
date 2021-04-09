@@ -20,10 +20,16 @@ def main():
         users[req['session']['user_id']] = 0
         response['response']['text'] = 'Привет!\nКупи слона!'
     else:
-        response['response']['text'] = str(users[req['session']['user_id']])+'\n'
         if users[req['session']['user_id']] == 0:
-            response['response']['text']+=f'Состояние юзера 0'
-
+            if len(set(req['session'].lower().split()).intersection(set('ладно',
+                                                                        'куплю',
+                                                                        'покупаю',
+                                                                        'хорошо'))) != 0:
+                users[req['session']['user_id']] = 2
+                response['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
+                response['response']['end_sessiion'] = True
+            else:
+                response['response']['text'] = 'Все говорят «Нет». А ты купи слона'
 
     return json.dumps(response)
 
