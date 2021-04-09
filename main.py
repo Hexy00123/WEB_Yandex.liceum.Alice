@@ -3,7 +3,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/', methods=['POST'])
+@app.route('/post', methods=['POST'])
 def main():
     response = {
         "version": request.json['version'],
