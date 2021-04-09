@@ -17,7 +17,7 @@ def main():
     }
     req = request.json
     if req['session']['new']:
-        users = {req['session']['user_id']: 0}
+        users[req['session']['user_id']] = 0
         response['response']['text'] = 'Привет!\nКупи слона!'
     else:
         if users[req['session']['user_id']] == 1:
