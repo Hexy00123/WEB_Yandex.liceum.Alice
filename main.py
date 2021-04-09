@@ -15,6 +15,8 @@ def main():
             "end_session": False
         }
     }
+    response['response']['text'] = 'Вы уже купили слона'
+
     req = request.json
     if req['session']['new']:
         users[req['session']['user_id']] = 0
