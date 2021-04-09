@@ -20,7 +20,9 @@ def main():
         users[req['session']['user_id']] = 0
         response['response']['text'] = 'Привет!\nКупи слона!'
     else:
-        response['response']['text'] = str(users[req['session']['user_id']])
+        response['response']['text'] = str(users[req['session']['user_id']])+'\n'
+        if users[req['session']['user_id']] == 0:
+            response['response']['text']+=f'Состояние юзера 0'
 
 
     return json.dumps(response)
