@@ -20,7 +20,8 @@ def main():
         users[req['session']['user_id']] = 0
         response['response']['text'] = 'Привет!\nКупи слона!'
     else:
-        response['response']['text'] = '\n'.join(users.keys())
+        response['response']['text'] = str(users[req['session']['user_id']])
+
 
     return json.dumps(response)
 
