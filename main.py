@@ -15,7 +15,7 @@ def main():
             "end_session": False
         }
     }
-    response['response']['text'] = 'Вы уже купили слона'
+    response['response']['text'] = 'Вы уже всех животных'
 
     req = request.json
     if req['session']['new']:
@@ -33,7 +33,7 @@ def main():
             else:
                 response['response']['text'] = 'Все говорят «Нет». А ты купи слона'
         elif users[req['session']['user_id']] == 2:
-            response["session"]['text'] = 'Купи кролика'
+            response["response"]['text'] = 'Купи кролика'
             users[req['session']['user_id']] = 3
         elif users[req['session']['user_id']] == 3:
             agree_messages = ['ладно', 'куплю', 'покупаю', 'хорошо']
