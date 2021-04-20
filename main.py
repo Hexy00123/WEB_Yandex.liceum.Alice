@@ -32,6 +32,19 @@ def main():
                 response['response']['end_sessiion'] = True
             else:
                 response['response']['text'] = 'Все говорят «Нет». А ты купи слона'
+        elif users[req['session']['user_id']] == 2:
+            response["session"]['text'] = 'Купи кролика'
+            users[req['session']['user_id']] = 3
+        elif users[req['session']['user_id']] == 3:
+            agree_messages = ['ладно', 'куплю', 'покупаю', 'хорошо']
+            if len(set(req['request']['original_utterance'].lower().split()).intersection(
+                    set(agree_messages))) != 0:
+                users[req['session']['user_id']] = 4
+                response['response']['text'] = 'Кролика можно найти на Яндекс.Маркете!'
+                response['response']['end_sessiion'] = True
+            else:
+                response['response']['text'] = 'Все говорят «Нет». А ты купи кролика'
+
 
     return json.dumps(response)
 
