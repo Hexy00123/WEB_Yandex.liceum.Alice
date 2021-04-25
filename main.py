@@ -31,7 +31,11 @@ def main():
     return json.dumps(response)
 
 
+city = ''
+
+
 def handle_dialog(res, req):
+    global city
     user_id = req['session']['user_id']
     if req['session']['new']:
         res['response']['text'] = 'Привет! Назови своё имя!'
@@ -74,7 +78,6 @@ def handle_dialog(res, req):
         # начал пользователь игру или нет.
         city = ''
         if not sessionStorage[user_id]['game_started']:
-            global city
             # игра не начата, значит мы ожидаем ответ на предложение сыграть.
             if 'да' in req['request']['nlu']['tokens']:
                 # если пользователь согласен, то проверяем не отгадал ли он уже все города.
