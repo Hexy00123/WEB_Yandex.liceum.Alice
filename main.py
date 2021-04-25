@@ -21,12 +21,13 @@ def main():
     req = request.json
     response['response']['text'] = 'Странная команда'
 
-    tokens = req['request']['nlu']['tokens']
-    if tokens[0] in ['переведи', 'переведите'] and tokens[1] == 'слово':
-        text = ' '.join(tokens[2:])
-        res = translator.translate(text, scr='ru', dest='en').text
-        response['response']['text'] = f'{res}'
-    return json.dumps(response)
+    if req['request']['original_utterance']:
+        tokens = req['request']['nlu']['tokens']
+        if tokens[0] in ['переведи', 'переведите'] and tokens[1] == 'слово':
+            text = ' '.join(tokens[2:])
+            res = translator.translate(text, scr='ru', dest='en').text
+            response['response']['text'] = f'{res}'
+        return json.dumps(response)
 
 
 if __name__ == '__main__':
