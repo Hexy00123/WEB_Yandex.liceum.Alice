@@ -172,7 +172,8 @@ def play_game(res, req):
                     'hide': True
                 }]
         else:
-            res['response']['text'] = 'Не верно'
+            res['response'][
+                'text'] = f'Не верно, это слово похоже на {sessionStorage[user_id]["is_country"][::2]}'
 
     sessionStorage[user_id]['attempt'] += 1
 
