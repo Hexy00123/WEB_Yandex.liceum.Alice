@@ -126,6 +126,7 @@ def play_game(res, req):
             res['response']['text'] = 'Правильно! А что это за страна?'
             sessionStorage[user_id]['guessed_cities'].append(city)
             sessionStorage[user_id]['game_started'] = True
+            sessionStorage[user_id]['is_country'] = True
             res['response']['buttons'] = [
                 {
                     'title': 'Да',
