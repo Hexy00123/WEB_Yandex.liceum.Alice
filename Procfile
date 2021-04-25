@@ -1,1 +1,1 @@
-web: ciuntry.py
+web: country.py
