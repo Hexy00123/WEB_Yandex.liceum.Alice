@@ -161,7 +161,7 @@ def play_game(res, req):
             sessionStorage[user_id]['guessed_cities'].append(
                 sessionStorage[user_id]['city'])
             sessionStorage[user_id]['game_started'] = False
-
+            sessionStorage[user_id]['is_country'] = False
             res['response']['buttons'] = [
                 {
                     'title': 'Да',
