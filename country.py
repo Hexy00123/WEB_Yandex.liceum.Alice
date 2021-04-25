@@ -155,7 +155,8 @@ def play_game(res, req):
                 res['response']['card']['image_id'] = cities[city][attempt - 1]
                 res['response']['text'] = 'А вот и не угадал!'
     else:
-        if get_city(req) == sessionStorage[user_id]['country']:
+        if req['request']['nlu']['tokens'][0] == sessionStorage[user_id]['country']:
+
             res['response']['text'] = 'Правильно! Сыграем еще?'
             sessionStorage[user_id]['guessed_cities'].append(
                 sessionStorage[user_id]['country']['city'])
@@ -180,5 +181,6 @@ def get_first_name(req):
 
 if __name__ == '__main__':
     import os
+
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
