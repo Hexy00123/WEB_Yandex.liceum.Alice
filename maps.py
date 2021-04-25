@@ -63,6 +63,8 @@ def handle_dialog(res, req):
                 },
                 {
                     'title': 'Покажи город на карте',
+                    'url': f'https://yandex.ru/maps/?mode=search&t'
+                           f'ext={sessionStorage[user_id]["city"]}',
                     'hide': True
                 }
             ]
@@ -97,6 +99,8 @@ def handle_dialog(res, req):
                     },
                     {
                         'title': 'Покажи город на карте',
+                        'url': f'https://yandex.ru/maps/?mode=search&t'
+                               f'ext={sessionStorage[user_id]["city"]}',
                         'hide': True
                     }
                 ]
@@ -135,6 +139,8 @@ def play_game(res, req):
                 },
                 {
                     'title': 'Покажи город на карте',
+                    'url': f'https://yandex.ru/maps/?mode=search&t'
+                           f'ext={sessionStorage[user_id]["city"]}',
                     'hide': True
                 }
             ]
