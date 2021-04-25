@@ -4,7 +4,6 @@ import googletrans
 from flask import Flask, request
 
 app = Flask(__name__)
-users = {}
 translator = googletrans.Translator()
 
 
@@ -28,8 +27,8 @@ def main():
                 text = ' '.join(tokens[2:])
                 res = translator.translate(text, scr='ru', dest='en').text
                 response['response']['text'] = f'{res}'
-            return json.dumps(response)
-    except Exception as e:
+        return json.dumps(response)
+    except:
         response['response']['text'] = 'Странная команда'
         return json.dumps(response)
 
