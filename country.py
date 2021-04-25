@@ -159,8 +159,18 @@ def play_game(res, req):
 
             res['response']['text'] = 'Правильно! Сыграем еще?'
             sessionStorage[user_id]['guessed_cities'].append(
-                sessionStorage[user_id]['country']['city'])
+                sessionStorage[user_id]['city'])
             sessionStorage[user_id]['game_started'] = False
+
+            res['response']['buttons'] = [
+                {
+                    'title': 'Да',
+                    'hide': True
+                },
+                {
+                    'title': 'Нет',
+                    'hide': True
+                }]
         else:
             res['response']['text'] = 'Не верно'
 
