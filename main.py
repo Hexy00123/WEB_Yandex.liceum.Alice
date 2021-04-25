@@ -2,15 +2,16 @@ from flask import Flask, request
 import logging
 import json
 import random
+import os
 
 app = Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
 
 cities = {
-    'москва': ["213044/cbcaa176ec8643cdd235",'1030494/4471dc38b68b51205cea'],
-    'нью-йорк': ['1652229/addf48648aa6c07463b2','1652229/9a4f8cee76dae7e184f0'],
-    'париж': ["1652229/c69451c1dc1a91edff68","213044/f71830424d2a24063f53"]
+    'москва': ["213044/cbcaa176ec8643cdd235", '1030494/4471dc38b68b51205cea'],
+    'нью-йорк': ['1652229/addf48648aa6c07463b2', '1652229/9a4f8cee76dae7e184f0'],
+    'париж': ["1652229/c69451c1dc1a91edff68", "213044/f71830424d2a24063f53"]
 }
 
 sessionStorage = {}
