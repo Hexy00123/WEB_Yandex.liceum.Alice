@@ -26,8 +26,9 @@ def main():
             'end_session': False
         }
     }
-    handle_dialog(response, request.json)
+    #handle_dialog(response, request.json)
     logging.info('Response: %r', response)
+    response['response']['text'] = 'Привет'
     return json.dumps(response)
 
 
