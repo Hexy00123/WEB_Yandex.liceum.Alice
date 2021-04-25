@@ -74,6 +74,7 @@ def handle_dialog(res, req):
         # начал пользователь игру или нет.
         city = ''
         if not sessionStorage[user_id]['game_started']:
+            global city
             # игра не начата, значит мы ожидаем ответ на предложение сыграть.
             if 'да' in req['request']['nlu']['tokens']:
                 # если пользователь согласен, то проверяем не отгадал ли он уже все города.
@@ -88,28 +89,16 @@ def handle_dialog(res, req):
                     # номер попытки, чтобы показывать фото по порядку
                     sessionStorage[user_id]['attempt'] = 1
                     # функция, которая выбирает город для игры и показывает фото
-                    play_game(res, req)
+                    city = play_game(res, req)
             elif 'нет' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
-            elif 'покажи город на карте' in req['request']['nlu']['tokens']:
+            else:
                 if len(sessionStorage[user_id]['guessed_cities']) > 0 and city != '':
                     site = f'https://yandex.ru/maps/?mode=search&text={city}'
                     res['response']['text'] = f'Ссылка на город: {site}'
                 else:
                     res['response']['text'] = f'Вы еще не играли'
-                res['response']['buttons'] = [
-                    {
-                        'title': 'Да',
-                        'hide': True
-                    },
-                    {
-                        'title': 'Нет',
-                        'hide': True
-                    }
-                ]
-            else:
-                res['response']['text'] = 'Не поняла ответа! Так да или нет?'
                 res['response']['buttons'] = [
                     {
                         'title': 'Да',
@@ -155,20 +144,6 @@ def play_game(res, req):
             res['response']['text'] = 'Правильно! Сыграем ещё?'
             sessionStorage[user_id]['guessed_cities'].append(city)
             sessionStorage[user_id]['game_started'] = False
-            res['response']['buttons'] = [
-                {
-                    'title': 'Да',
-                    'hide': True
-                },
-                {
-                    'title': 'Нет',
-                    'hide': True
-                },
-                {
-                    'title': 'Покажи город на карте',
-                    'hide': True
-                }
-            ]
             return city
         else:
             # если нет
