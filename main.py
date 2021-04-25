@@ -10,15 +10,15 @@ translator = googletrans.Translator()
 
 @app.route('/', methods=['POST'])
 def main():
-    try:
-        response = {
-            "version": request.json['version'],
-            "session": request.json['session'],
-            "response": {
-                "end_session": False
-            }
+    response = {
+        "version": request.json['version'],
+        "session": request.json['session'],
+        "response": {
+            "end_session": False
         }
+    }
 
+    try:
         req = request.json
         response['response']['text'] = 'Странная команда'
 
@@ -30,7 +30,8 @@ def main():
                 response['response']['text'] = f'{res}'
             return json.dumps(response)
     except Exception as e:
-        print(e)
+        response['response']['text'] = 'Странная команда'
+        return json.dumps(response)
 
 
 if __name__ == '__main__':
