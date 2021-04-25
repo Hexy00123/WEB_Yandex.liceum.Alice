@@ -17,7 +17,12 @@ def main():
     }
 
     req = request.json
-    response['response']['text'] = req['request']['command']
+    response['response']['text'] = 'Странная команда'
+
+    tokens = req['request']['nlu']['tokens']
+    if tokens[0] in ['переведи', 'переведите'] and tokens[1] == 'слово':
+        text = ' '.join(tokens[2:])
+        response['response']['text'] = f'Нужен перевод фразы: "{text}"'
 
     return json.dumps(response)
 
