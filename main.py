@@ -10,24 +10,27 @@ translator = googletrans.Translator()
 
 @app.route('/', methods=['POST'])
 def main():
-    response = {
-        "version": request.json['version'],
-        "session": request.json['session'],
-        "response": {
-            "end_session": False
+    try:
+        response = {
+            "version": request.json['version'],
+            "session": request.json['session'],
+            "response": {
+                "end_session": False
+            }
         }
-    }
 
-    req = request.json
-    response['response']['text'] = 'Странная команда'
+        req = request.json
+        response['response']['text'] = 'Странная команда'
 
-    if req['request']['original_utterance']:
-        tokens = req['request']['nlu']['tokens']
-        if tokens[0] in ['переведи', 'переведите'] and tokens[1] == 'слово':
-            text = ' '.join(tokens[2:])
-            res = translator.translate(text, scr='ru', dest='en').text
-            response['response']['text'] = f'{res}'
-        return json.dumps(response)
+        if req['request']['original_utterance']:
+            tokens = req['request']['nlu']['tokens']
+            if tokens[0] in ['переведи', 'переведите'] and tokens[1] == 'слово':
+                text = ' '.join(tokens[2:])
+                res = translator.translate(text, scr='ru', dest='en').text
+                response['response']['text'] = f'{res}'
+            return json.dumps(response)
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':
