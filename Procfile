@@ -1,1 +1,1 @@
-web: python country.py
+web: python main.py
