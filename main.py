@@ -31,7 +31,6 @@ def main():
     return json.dumps(response)
 
 
-
 def handle_dialog(res, req):
     global city
     user_id = req['session']['user_id']
@@ -95,7 +94,8 @@ def handle_dialog(res, req):
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
             else:
-                if len(sessionStorage[user_id]['guessed_cities']) > 0 and city != '':
+                if len(sessionStorage[user_id]['guessed_cities']) > 0 and sessionStorage[user_id][
+                    "city"] != '':
                     site = f'https://yandex.ru/maps/?mode=search&text={sessionStorage[user_id]["city"]}'
                     res['response']['text'] = f'Ссылка на город: {site}'
                 else:
