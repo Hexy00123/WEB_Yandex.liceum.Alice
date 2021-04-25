@@ -117,13 +117,15 @@ def play_game(res, req):
 
         res['response']['card'] = {}
         res['response']['card']['type'] = 'BigImage'
-        res['response']['card']['title'] = 'Что это за город?'
+        res['response']['card'][
+            'title'] = f'{sessionStorage[user_id]["first_name"]}, Что это за город?'
         res['response']['card']['image_id'] = cities[city][attempt - 1]
         res['response']['text'] = 'Тогда сыграем!'
     elif not sessionStorage[user_id]['is_country']:
         city = sessionStorage[user_id]['city']
         if get_city(req) == city:
-            res['response']['text'] = 'Правильно! А что это за страна?'
+            res['response'][
+                'text'] = f'{sessionStorage[user_id]["first_name"]}, Правильно! А что это за страна?'
             sessionStorage[user_id]['guessed_cities'].append(city)
             sessionStorage[user_id]['game_started'] = True
             sessionStorage[user_id]['is_country'] = True
@@ -144,20 +146,26 @@ def play_game(res, req):
             return
         else:
             if attempt == 3:
-                res['response']['text'] = f'Вы пытались. Это {city.title()}. Сыграем ещё?'
+                res['response'][
+                    'text'] = f'{sessionStorage[user_id]["first_name"]}, Вы пытались.' \
+                              f' Это {city.title()}. Сыграем ещё?'
                 sessionStorage[user_id]['game_started'] = False
                 sessionStorage[user_id]['guessed_cities'].append(city)
                 return
             else:
                 res['response']['card'] = {}
                 res['response']['card']['type'] = 'BigImage'
-                res['response']['card']['title'] = 'Неправильно. Вот тебе дополнительное фото'
+                res['response']['card'][
+                    'title'] = f'{sessionStorage[user_id]["first_name"]}, Неправильно. ' \
+                               f'Вот тебе дополнительное фото'
                 res['response']['card']['image_id'] = cities[city][attempt - 1]
-                res['response']['text'] = 'А вот и не угадал!'
+                res['response'][
+                    'text'] = f'{sessionStorage[user_id]["first_name"]}, А вот и не угадал!'
     else:
         if req['request']['nlu']['tokens'][0] == sessionStorage[user_id]['country']:
 
-            res['response']['text'] = 'Правильно! Сыграем еще?'
+            res['response'][
+                'text'] = f'{sessionStorage[user_id]["first_name"]}, Правильно! Сыграем еще?'
             sessionStorage[user_id]['guessed_cities'].append(
                 sessionStorage[user_id]['city'])
             sessionStorage[user_id]['game_started'] = False
@@ -173,7 +181,8 @@ def play_game(res, req):
                 }]
         else:
             res['response'][
-                'text'] = f'Не верно, это слово похоже на {sessionStorage[user_id]["country"][::2]}'
+                'text'] = f'{sessionStorage[user_id]["first_name"]}, Не верно, ' \
+                          f'это слово похоже на {sessionStorage[user_id]["country"][::2]}'
 
     sessionStorage[user_id]['attempt'] += 1
 
