@@ -31,8 +31,6 @@ def main():
     return json.dumps(response)
 
 
-city = ''
-
 
 def handle_dialog(res, req):
     global city
@@ -41,7 +39,8 @@ def handle_dialog(res, req):
         res['response']['text'] = 'Привет! Назови своё имя!'
         sessionStorage[user_id] = {
             'first_name': None,  # здесь будет храниться имя
-            'game_started': False
+            'game_started': False,
+            'city': ''
             # здесь информация о том, что пользователь начал игру. По умолчанию False
         }
         return
@@ -91,13 +90,13 @@ def handle_dialog(res, req):
                     # номер попытки, чтобы показывать фото по порядку
                     sessionStorage[user_id]['attempt'] = 1
                     # функция, которая выбирает город для игры и показывает фото
-                    city = play_game(res, req)
+                    play_game(res, req)
             elif 'нет' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
             else:
                 if len(sessionStorage[user_id]['guessed_cities']) > 0 and city != '':
-                    site = f'https://yandex.ru/maps/?mode=search&text={city}'
+                    site = f'https://yandex.ru/maps/?mode=search&text={sessionStorage[user_id]["city"]}'
                     res['response']['text'] = f'Ссылка на город: {site}'
                 else:
                     res['response']['text'] = f'Вы еще не играли'
@@ -128,6 +127,7 @@ def play_game(res, req):
         # выбираем его до тех пор пока не выбираем город, которого нет в sessionStorage[user_id]['guessed_cities']
         while city in sessionStorage[user_id]['guessed_cities']:
             city = random.choice(list(cities))
+        sessionStorage[user_id]['city'] = city
         # записываем город в информацию о пользователе
         sessionStorage[user_id]['city'] = city
         # добавляем в ответ картинку
@@ -146,7 +146,7 @@ def play_game(res, req):
             res['response']['text'] = 'Правильно! Сыграем ещё?'
             sessionStorage[user_id]['guessed_cities'].append(city)
             sessionStorage[user_id]['game_started'] = False
-            return city
+            return
         else:
             # если нет
             if attempt == 3:
